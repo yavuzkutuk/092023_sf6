@@ -1,0 +1,42 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+ {# the data-index attribute is required for the JavaScript code below #}
+<ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" data-index="0">
+</ul>
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+
+<button type="button" class="add_item_link" data-collection-holder-class="tags">Add a tag</button>
+
+<script>
+const addTagLink = document.createElement('a')
+addTagLink.classList.add('add_tag_list')
+addTagLink.href='#'
+addTagLink.innerText='Add a tag'
+addTagLink.dataset.collectionHolderClass='tags'
+
+const newLinkLi = document.createElement('li').append(addTagLink)
+
+const collectionHolder = document.querySelector('ul.tags')
+collectionHolder.appendChild(addTagLink)
+
+const addFormToCollection = (e) => {
+	const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+
+      const item = document.createElement('li');
+
+      item.innerHTML = collectionHolder
+        .dataset
+        .prototype
+        .replace(
+          /__name__/g,
+          collectionHolder.dataset.index
+        );
+
+      collectionHolder.appendChild(item);
+
+      collectionHolder.dataset.index++;
+}
+
+addTagLink.addEventListener("click", addFormToCollection)
+</script>
