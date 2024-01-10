@@ -22,8 +22,17 @@ class ArticleType extends AbstractType
             ])
             ->add('tags', CollectionType::class, [
                 'entry_type' => TagType::class,
-                'entry_options' => ['label' => false],
                 'allow_add' => true,
+                'allow_delete' => true,
+                'delete_empty' => true,
+                'by_reference' => false,
+                'prototype_name' => '__name2__',  // Advised by Symfony
+                'attr' => [
+                    'data-prototype-name' => '__name2__'  // Required by a2lix_sf_collection
+                ],
+                'entry_options' => [
+                    'label' => false,
+                ],
             ]);
     }
 

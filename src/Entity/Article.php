@@ -21,7 +21,7 @@ class Article
     #[ORM\ManyToOne(inversedBy: 'articles')]
     private ?Category $category = null;
 
-    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'articles')]
+    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'articles', cascade: ['persist', 'remove'])]
     private Collection $tags;
 
     public function __construct()
